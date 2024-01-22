@@ -181,7 +181,7 @@ def generate_datalist(cache_path, data_list, annotation):
     all_cache_file = glob.glob(os.path.join(cache_path, '*', '*.pkl'))
     select_files = []
     with open(annotation, 'r') as f:
-        select_files = [json.loads(s)['raw_file'] for s in r.readlines()]
+        select_files = [json.loads(s)['raw_file'] for s in f.readlines()]
     with open(data_list, 'w') as w:
         for item in all_cache_file:
             id = '/'.join(item[:-4].split('/')[-2:])

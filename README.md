@@ -1,3 +1,30 @@
+# AMRL Modifications
+
+As of Jan 22, 2024, the ApolloSim directory is available on robodata here `/robodata/public_datasets/Datasets/Apollo_Sim_3D_Lane_Release`
+
+In step 1. Run the following commands to install the dependencies:
+```
+conda install pytorch==1.9.1 torchvision==0.10.1 torchaudio==0.9.1 cudatoolkit=11.3 -c pytorch -c conda-forge
+```
+
+In Step 2, install mmcv<=1.6.2 and install jarvis using the following commands:
+```
+mim install mmcv-full==1.6.2
+pip install ./wheels/jarvis-2021.4.2-py2.py3-none-any.whl
+```
+
+In Apollosim step 2, run the following command to generate annotation pickle files:
+```
+python apollosim.py /robodata/public_datasets/Datasets/Apollo_Sim_3D_Lane_Release
+```
+
+### Testing
+
+After installing the dependencies and building the dataset, run the following to test
+```
+python tools/test.py configs/apollosim/anchor3dlane_iter.py anchor3dlane_weights/apollo_anchor3dlane_iter.pth --show-dir outputs
+```
+
 # Anchor3DLane
 This repo is the official PyTorch implementation for paper:
 
