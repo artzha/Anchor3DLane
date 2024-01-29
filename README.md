@@ -21,8 +21,11 @@ python apollosim.py /robodata/public_datasets/Datasets/Apollo_Sim_3D_Lane_Releas
 ### Testing
 
 After installing the dependencies and building the dataset, run the following to test
+
+Updated `data_root` in `configs/apollosim/anchor3dlane_iter.py`
+Added `args.show = True` to produce visualization
 ```
-python tools/test.py configs/apollosim/anchor3dlane_iter.py anchor3dlane_weights/apollo_anchor3dlane_iter.pth --show-dir outputs
+python tools/test.py configs/apollosim/anchor3dlane_iter.py /robodata/arthurz/EcoCAR/Anchor3DLane/anchor3dlane_weights/apollo_anchor3dlane_iter.pth --show-dir outputs
 ```
 
 # Anchor3DLane
