@@ -107,7 +107,7 @@ class EfficientNet(nn.Module):
         super(EfficientNet, self).__init__()
         self.pretrain_path = {'b5': 'pretrained/tf_efficientnet_b5_ns-6f26d0cf.pth',
                     'b4': 'pretrained/tf_efficientnet_b4_ns-d6313a46.pth', 
-                    'b3': 'pretrained/tf_efficientnet_b3_ns-9d44bf68.pth', 
+                    'b3': '/home/jihwan98/Anchor3DLane/checkpoint/pretrained/tf_efficientnet_b3_ns-9d44bf68.pth', 
                     'b2': 'pretrained/tf_efficientnet_b2_ns-00306e48.pth', 
                     'b1': 'pretrained/tf_efficientnet_b1_ns-99dd0c41.pth'}
         self.arch = arch
