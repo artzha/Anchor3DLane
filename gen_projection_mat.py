@@ -32,15 +32,12 @@ def read_bin(bin_path, keep_intensity=False):
         bin_np = bin_np[:, :3]
     return bin_np
 
-
-
-def get_norm_vec(path):
+def get_plane(path):
     pcs = read_bin(path)
     pcs = pcs[(pcs[:, 2] < -1.2) & (pcs[:, 2] > -3)]
     points = Points(pcs)
     plane = Plane.best_fit(points)
-    normal = np.array(plane.normal)
-    return normal
+    return plane
 
 def get_rot_mat_from_norm_vec(n):
     """
@@ -106,20 +103,27 @@ def main():
     R_L_C = A_L_C[:3, :3]
 
     # assumption that L was not tilted
-    R_G_L = np.array([[0, 1, 0], [-1, 0, 0], [0, 0, 1]])
-    h_L   =  np.array([0, 0, 1.2])
+    '''
+    R_G_L = np.array([[ 0, 1, 0], 
+                      [-1, 0, 0], 
+                      [ 0, 0, 1]])
+    '''
 
-    # R_G_C = R_L_C @ R_G_L
     path = "/robodata/ecocar_logs/processed/CACCDataset/3d_raw/os1/44/3d_raw_os1_44_1.bin"
-    normal = get_norm_vec(path)
+    plane = get_plane(path)
+    h_L = np.array([0, 0, abs(plane.point[2])])
+    normal = np.array(plane.normal)
+
     R_G_L = get_rot_mat_from_norm_vec(normal) # similar to 90 CCW direction z-direction
     
-    import pdb; pdb.set_trace()
     A_G_C = np.eye(4, dtype=float)
-    A_G_C[:3, :3] = R_G_C
+    A_G_C[:3, :3] = R_L_C @ R_G_L
     A_G_C[:3, -1] = h_L
 
-    return A_G_C
+    # import pdb; pdb.set_trace()
+
+    # save the projection matrix
+    pass
 
 if __name__== "__main__":
     main()
