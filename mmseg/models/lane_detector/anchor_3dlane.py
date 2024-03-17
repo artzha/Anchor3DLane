@@ -397,6 +397,7 @@ class Anchor3DLane(BaseModule):
         if return_loss:
             return self.forward_train(img, mask, img_metas, **kwargs)
         else:
+            # import pdb; pdb.set_trace()
             return self.forward_test(img, mask, img_metas, **kwargs)
     
 

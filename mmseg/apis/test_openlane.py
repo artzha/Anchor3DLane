@@ -13,17 +13,18 @@ from mmcv.runner import get_dist_info
 from mmcv.engine import collect_results_cpu
 import tqdm
 import random
-import pdb
 
 import matplotlib.pyplot as plt
 from mmseg.datasets.tools.vis_openlane import LaneVis
+
+from helpers.data import save_DC_in_json
 
 
 def postprocess(output, anchor_len=10):
     proposals = output[0]
     logits = F.softmax(proposals[:, 5 + 3 * anchor_len:], dim=1)
     score = 1 - logits[:, 0]  # [N]
-    proposals[:, 5 + 3 * anchor_len:] = logits  # [N, 2]
+    proposals[:, 5 + 3 * anchor_len:] = logits  # [N, 21]
     proposals[:, 1] = score
     results = {'proposals_list': proposals.cpu().numpy()}
     return results   # [1, 7, 16]
@@ -53,7 +54,9 @@ def test_openlane(model,
     pred_file = osp.join(out_dir, 'lane3d_prediction.json')
     print("testing model...")
     for batch_indices, data in tqdm.tqdm(zip(loader_indices, data_loader)):
+        save_DC_in_json(data)
         with torch.no_grad():
+            import pdb; pdb.set_trace()
             outputs= model(return_loss=False, **data)
             for output in outputs['proposals_list']:
                 result = postprocess(output, anchor_len=dataset.anchor_len)
@@ -114,6 +117,8 @@ def test_openlane_multigpu(model,
     dataset = data_loader.dataset
     loader_indices = data_loader.batch_sampler
     prob_th=model.module.test_cfg.test_conf
+
+    import pdb; pdb.set_trace()
 
     pred_file = osp.join(out_dir, 'lane3d_prediction.json')
     print("testing model...")

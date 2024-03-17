@@ -4,7 +4,7 @@ As of Jan 22, 2024, the ApolloSim directory is available on robodata here `/robo
 
 In step 1. Run the following commands to install the dependencies:
 ```
-conda install pytorch==1.9.1 torchvision==0.10.1 torchaudio==0.9.1 cudatoolkit=11.3 -c pytorch -c conda-forge
+conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3 -c pytorch -c conda-forge
 ```
 
 In Step 2, install mmcv<=1.6.2 and install jarvis using the following commands:

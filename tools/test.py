@@ -171,7 +171,7 @@ def main():
     })
     test_loader_cfg = {
         **loader_cfg,
-        'samples_per_gpu': 16,    # for debug
+        'samples_per_gpu': 1,    # for debug
         'shuffle': False,  # Not shuffle by default
         **cfg.data.get('test_dataloader', {})
     }
@@ -181,8 +181,6 @@ def main():
     # build the model and load checkpoint
     model = build_lanedetector(cfg.model)
     checkpoint = load_checkpoint(model, args.checkpoint, map_location='cpu')
-    print(model)
-    
 
     # clean gpu memory when starting a new evaluation.
     torch.cuda.empty_cache()
@@ -190,6 +188,9 @@ def main():
 
     mmcv.mkdir_or_exist(args.show_dir)
     
+    # To visualize results
+    args.show = True
+
     cfg.device = get_device()
     if not distributed:
         warnings.warn(
